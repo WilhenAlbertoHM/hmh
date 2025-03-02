@@ -5,9 +5,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { ArrowLeft, MapPin, Calendar, Clock, Users, FileText, CheckCircle, AlertCircle } from "lucide-react"
-import { type Trial } from "../../types/trial"
 
-export default async function TrialDetailsPage({ params }: { params: { id: string } }) {
+export default async function TrialDetailsPage() {
   const trial = {
     status: "Recruiting",
     phase: "Phase 3",
