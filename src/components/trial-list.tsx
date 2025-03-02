@@ -1,32 +1,30 @@
-import { Badge } from "@/components/ui/badge"
-import { CardTitle, CardDescription } from "@/components/ui/card"
-import { Calendar, Users, ArrowRight } from "lucide-react"
-import { MapPin } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { Card, CardHeader, CardFooter, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge";
+import { CardTitle, CardDescription } from "@/components/ui/card";
+import { Calendar, Users, ArrowRight, MapPin } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Card, CardHeader, CardFooter, CardContent } from "@/components/ui/card";
 import { createClient } from '@supabase/supabase-js';
-// import { getTrials } from "@/app/api/trials"
+import { type Trial } from '../app/types/trial';
 
 export default async function TrialList() {
     const supabase = createClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL || '',
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
     );
-    // getTrials();
 
-    const { data, error } = await supabase.from('trials').select('*');
-    if (error) {
-        console.error('Error fetching trials:', error);
-    }
+    // Fetch patient recommendations
+    const { data, error } = await supabase
+    .from('trials')
+    .select('*');
+
     const trials = data || [];
-
     return (
         <article className="space-y-4 mt-6">
             {trials.length > 0 ? (
-                trials.map((trial) => (
+                trials.map((trial: Trial, index: number) => (
                     <Card
-                        key={trial.id}
+                        key={trial.nctId || index}
                         className="overflow-hidden shadow-soft hover:shadow-hover transition-all duration-300"
                     >
                         <CardHeader className="pb-2">
@@ -34,14 +32,14 @@ export default async function TrialList() {
                                 <Badge
                                     variant="secondary"
                                     className={`${
-                                            trial.status === 'RECRUITING'
-                                                ? 'border-green-500'
-                                                : trial.status === 'NOT_YET_RECRUITING'
-                                                ? 'border-yellow-500'
-                                                : trial.status === 'ENROLLING_BY_INVITATION'
-                                                ? 'border-blue-500'
-                                                : ''
-                                        } bg-opacity-90`}
+                                        trial.status === 'RECRUITING'
+                                            ? 'border-green-500'
+                                            : trial.status === 'NOT_YET_RECRUITING'
+                                            ? 'border-yellow-500'
+                                            : trial.status === 'ENROLLING_BY_INVITATION'
+                                            ? 'border-blue-500'
+                                            : ''
+                                    } bg-opacity-90`}
                                 >
                                     {trial.status.replaceAll("_", " ")}
                                 </Badge>
@@ -58,44 +56,39 @@ export default async function TrialList() {
                             <div className="flex flex-col gap-4 text-sm">
                                 <div className="flex items-center gap-1">
                                     <MapPin className="h-4 w-4 text-secondary-600" />
-                                    <div className="flex gap-1">
+                                    <div className="flex gap-1 flex-wrap">
                                         {Array.isArray(trial.locations) && trial.locations.length > 0 ? (
-                                            trial.locations.slice(0, 3).map((location: string, index: number) => (
+                                            trial.locations.slice(0, 3).map((location, index) => (
                                                 <span key={index} className="border border-primary-200 rounded-md p-1">
                                                     {location}
                                                 </span>
                                             ))
                                         ) : (
-                                            <span>No locations specified</span>
+                                            <span>No location available</span>
                                         )}
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-1">
                                     <Calendar className="h-4 w-4 text-secondary-600" />
-                                    <span>Start: {trial.startDate}</span>
+                                    <span>Start Date: {trial.startDate || 'Unknown'}</span>
                                 </div>
                                 <div className="flex items-center gap-1">
                                     <Users className="h-4 w-4 text-secondary-600" />
-                                    <span>Participants: {trial.num_participants}</span>
+                                    <span>Participants: {trial.participants || 'Not Specified'}</span>
                                 </div>
                             </div>
-                            <div className="mt-3 flex items-center gap-2"></div>
-                            <div className="text-sm font-medium">Match Score:</div>
                         </CardContent>
-                        <CardFooter className="pt-2">
-                            <Link href={`/trials/${trial.nctId}`} className="w-full">
-                                <Button variant="outline" className="w-full gap-1 hover:bg-primary-50 transition-colors">
-                                    View Details
-                                    <ArrowRight className="h-4 w-4" />
+                        <CardFooter className="flex justify-end">
+                            <Link href={`/trials/${trial.nctId}`} passHref>
+                                <Button variant="outline">
+                                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
                                 </Button>
                             </Link>
                         </CardFooter>
                     </Card>
                 ))
             ) : (
-                <div className="text-center p-6">
-                    <p>No trials found</p>
-                </div>
+                <p className="text-center text-gray-500">No recommended trials found.</p>
             )}
         </article>
     );
