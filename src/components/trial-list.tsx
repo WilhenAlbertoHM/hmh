@@ -60,7 +60,7 @@ export default async function TrialList() {
                                     <MapPin className="h-4 w-4 text-secondary-600" />
                                     <div className="flex gap-1">
                                         {Array.isArray(trial.locations) && trial.locations.length > 0 ? (
-                                            trial.locations.slice(0, 3).map((location, index) => (
+                                            trial.locations.slice(0, 3).map((location: string, index: number) => (
                                                 <span key={index} className="border border-primary-200 rounded-md p-1">
                                                     {location}
                                                 </span>
