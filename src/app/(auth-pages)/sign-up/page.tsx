@@ -19,15 +19,15 @@ export default async function Signup(props: {
 
   return (
     <>
-      <form className="flex flex-col w-96 gap-2 mx-auto mt-8 bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-medium">Sign up</h1>
+      <form className="flex flex-col w-96 gap-2 mx-auto mt-8 bg-white p-6 rounded-lg shadow-lg">
+        <h1 className="text-2xl font-bold">Sign up</h1>
         <p className="text-sm">
           Already have an account?{" "}
           <Link className="font-medium underline" href="/">
             Sign in
           </Link>
         </p>
-        <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
+        <div className="flex flex-col gap-2 [&>input]:mb-3 mt-4">
           <Label htmlFor="email">Email</Label>
           <Input name="email" placeholder="you@example.com" required />
           <Label htmlFor="password">Password</Label>
