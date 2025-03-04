@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Card, CardHeader, CardFooter, CardContent } from "@/components/ui/card";
 import { createClient } from '@supabase/supabase-js';
 import { type Trial } from '../app/types/trial';
+// import { getTrials } from '../app/api/trials';
 
 export default async function TrialList() {
     const supabase = createClient(
@@ -13,8 +14,10 @@ export default async function TrialList() {
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
     );
 
+    // getTrials();
+
     // Fetch patient recommendations
-    const { data, error } = await supabase
+    const { data } = await supabase
     .from('trials')
     .select('*');
 

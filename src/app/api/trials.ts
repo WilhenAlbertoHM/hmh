@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import { createClient } from "@supabase/supabase-js";
 import { type Trial } from "../types/trial";
 import { type Client } from "../types/client";
-// import { GoogleGenerativeAI } from "@google/generative-ai";
 import Groq from "groq-sdk";
 
 const API_BASE_URL = "https://clinicaltrials.gov/api/v2/studies?postFilter.overallStatus=RECRUITING,AVAILABLE,ENROLLING_BY_INVITATION,NOT_YET_RECRUITING&countTotal=true&pageSize=20&sort=@relevance";
@@ -44,6 +43,7 @@ export async function getTrials() {
                 sex: protocolSection.eligibilityModule?.sex || 'Not Specified',
                 minimumAge: protocolSection.eligibilityModule?.minimumAge || 'Not Specified',
                 maximumAge: protocolSection.eligibilityModule?.maximumAge || 'Not Specified',
+
             };
         });
 
