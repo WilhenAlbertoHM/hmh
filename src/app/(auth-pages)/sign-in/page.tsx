@@ -1,6 +1,6 @@
 "use client"
 
-import { LoginForm } from "@/components/login-form" // Import your LoginForm from a separate component file
+import { LoginForm } from "@/components/login-form"
 import { Message } from "@/components/form-message"
 import { useSearchParams } from "next/navigation"
 

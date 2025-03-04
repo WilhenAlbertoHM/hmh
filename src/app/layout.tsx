@@ -36,7 +36,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${montserrat.className}`}>
-        <div className="min-h-screen flex flex-col antialiased bg-white bg-[radial-gradient(60%_120%_at_50%_50%,hsla(0,0%,100%,0)_0,rgba(137,196,244,0.5)_100%)]">
+        <div className="min-h-screen flex flex-col antialiased bg-white bg-[radial-gradient(60%_120%_at_50%_50%,hsla(0,0%,100%,0)_0,rgba(137,196,244,1)_100%)]">
           <header className="sticky top-0 z-3 w-full border-b bg-background/95 flex justify-evenly backdrop-blur supports-[backdrop-filter]:bg-background/90 px-4">
             <div className="container mx-auto px-4 flex h-16 items-center">
               <Link href={user ? "/dashboard" : "/"} className="flex items-center gap-2 font-semibold">
@@ -52,7 +52,7 @@ export default async function RootLayout({
           </header>
           
           <main className="flex-1">
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto py-8">
               {children}
             </div>
           </main>
